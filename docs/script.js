@@ -5,6 +5,7 @@ var gameBoardSize = 40;
 var gamePoints = 0;
 var gameSpeed = 100;
 
+
 $(document).ready(function () {
     console.log("Ready Player One!");
     createBoard();
@@ -174,7 +175,14 @@ function startGame() {
     Food.present = false;
     
     // start game
+    inputsValue();
     createBoard();
     $(".overlay").hide();
     gameLoop();
+}
+
+function inputsValue(){
+  var oinputsIndex = document.getElementById("inputs").selectedIndex;
+  var oinputsValue = document.getElementById("inputs").options[oinputsIndex].value;
+  console.log(oinputsValue);
 }

@@ -8,14 +8,32 @@
 </head>
 <body>
 <!-- partial:index.partial.html -->
-<div class="container">
-            <header class="title">
-                <h2>JavaScript Snake Game</h2>
-                <h3 id="score">Score: </h3>
-            </header>
+    <div id="wholeDiv">
+
+        <div id="infoPart">
+            <div class="container">
+                <header class="title">
+                    <h3>JavaScript Snake Game</h3>
+                    <h3 id="score">Score: </h3>
+                </header>
+            </div>
+
+            <div class="container">
+                <button id="connect">connect</button>
+                <!-- <h4>Left Controller</h4>
+                <pre id="left"></pre>
+                <h4>Right Controller</h4>
+                <pre id="right"></pre> -->
+               <!-- <select id="inputs" onchange="inputsValue()"> -->
+                <select id="inputs">
+                    <option value="joyconButtonStick">JoyCon Button & Stick</option>
+                    <option value="joyconBewegung">JoyConbewegung</option>
+                </select>
+            </div>
         </div>
+    
         
-        <div class="container">
+        <div class="container" id="gamePart">
             <section class="overlay">
                 <div class="gameOverGrid">
                     <h3 id="gameOver">You lose!</h3>
@@ -24,8 +42,16 @@
             </section>
             <section id="gameBoard"></section>
         </div>
-<!-- partial -->
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script><script  src="./script.js"></script>
 
+
+    </div>
+    
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
+
+  <script src="./script.js"></script>
+  <script type="module" src="./joyCon.js"></script>
+ 
+  
 </body>
 </html>

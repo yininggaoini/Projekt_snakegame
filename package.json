@@ -1,0 +1,22 @@
+{
+  "name": "javascript-snake-game",
+  "version": "1.0.0",
+  "description": "A Pen created on CodePen.io. Original URL: [https://codepen.io/andhouse/pen/wzjKjw](https://codepen.io/andhouse/pen/wzjKjw).",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yininggaoini/demo_snake_game.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yininggaoini/demo_snake_game/issues"
+  },
+  "homepage": "https://github.com/yininggaoini/demo_snake_game#readme"
+}
