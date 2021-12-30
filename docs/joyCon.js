@@ -2,6 +2,8 @@ import { connectJoyCon, connectedJoyCons, JoyConLeft } from './lib/joycon/index.
 
 document.addEventListener('DOMContentLoaded', onLoad);
 
+const accXLeft = [];
+const accXRight = [];
 
 function onLoad(){
     const button = document.getElementById('connect');
@@ -67,28 +69,59 @@ function buttonStickData(joyCon,packet){
 }
 
 function armData(joyCon,packet){
+  
   //let accerometerCheck;
   let actualX = packet.actualAccelerometer["x"];
   let actualY = packet.actualAccelerometer["y"];
   // let actualZ = packet.actualAccelerometer["z"];
 
   if(joyCon instanceof JoyConLeft){
+    
     //accerometerCheck = packet;
     if(actualX > 0.007){ //up
-      console.log("up");
-      if (Snake.direction != "d") {Snake.direction = "u";}
+     // console.log("up");
+      let start = performance.now();
+      if(actualX <= 0.007){
+        let end = performance.now();
+        console.log(end - start);
+          if( (end - start) > 1000){
+            // if end - start = 1000
+            if (Snake.direction != "d") {Snake.direction = "u";}
+          } //else break;
+      }    
     }
     else if(actualX < -0.007){  //down
-      console.log("down");
-      if (Snake.direction != "u") {Snake.direction = "d";}
+     // console.log("down");
+     let start = performance.now();
+     if(actualX >= -0.007){
+       let end = performance.now();
+       console.log(end - start);
+       if( (end - start) > 1000){
+          if (Snake.direction != "u") {Snake.direction = "d";}
+       } //else break;
+      }
     }
     if(actualY < -0.007){ //left
-      console.log("left");
-      if (Snake.direction != "r") {Snake.direction = "l";}
+      //console.log("left");
+      let start = performance.now();
+      if(actualY >= -0.007){
+       let end = performance.now();
+       console.log(end - start);
+       if( (end - start) > 1000){
+        if (Snake.direction != "r") {Snake.direction = "l";}
+       }//else break;
+      }
     }
     else if(actualY > 0.007){ //right
-      console.log("right");
-      if (Snake.direction != "l") {Snake.direction = "r";}
+     // console.log("right");
+     let start = performance.now();
+      if(actualY <= 0.007){
+       let end = performance.now();
+       console.log(end - start);
+       if( (end - start) > 1000){
+          if (Snake.direction != "l") {Snake.direction = "r";}
+       }//else break;
+      }
     }
   }
   else{
@@ -96,7 +129,30 @@ function armData(joyCon,packet){
   }
 } 
 
+function saveData(joyCon, packet){
+  if(joyCon instanceof JoyConLeft){
+    let actualX = packet.actualAccelerometer["x"];
+    if(accXLeft.length >= 50){
+      // Lösche erste Elemente
+      accXLeft.shift();
+    }
+   // accXLeft.push(actualX);
+   // accXLeft.push([actualX,performance.now()])
+   accXLeft.push({value:actualX,timeStamp:performance.now()})
+  }else{
+
+  }
+}
+
+setInterval(function (){
+
+  console.log(accXLeft.length,accXLeft);
+},500)
+
+
 setInterval(async () => {
+
+   // inputsValue();
     for (const joyCon of connectedJoyCons.values()) {
       if (joyCon.eventListenerAttached) {
         continue;
@@ -105,15 +161,18 @@ setInterval(async () => {
       await joyCon.enableStandardFullMode();
       await joyCon.enableIMUMode();
       await joyCon.enableVibration();
-      
+      //localStorage.getItem()
+      //console.log(oinputsValue);
       //if(oinputsValue==="joyconBewegung"){console.log("1");} else{console.log("0");} //oinputsValue not defined!
-      var it = oinputsValue;
-      console.log(it)
+      //if(oinputsValue=="joyconBewegung") console.log("123")
       joyCon.addEventListener('hidinput', (event) => {
-        buttonStickData(joyCon, event.detail);
+        //armData(joyCon, event.detail);
        // defineDirc(show);
+       saveData(joyCon, event.detail);
+      // console.log(performance.now());
       });
       
       joyCon.eventListenerAttached = true;
     }
   }, 2000);
+

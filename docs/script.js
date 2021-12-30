@@ -164,6 +164,16 @@ function gameOver() {
     blinkLoop();
 }
 
+function inputsValue(){
+  var oinputsIndex = document.getElementById("inputs").selectedIndex;
+  var oinputsValue = document.getElementById("inputs").options[oinputsIndex].value;
+  console.log(oinputsValue);
+ // localStorage.setItem('inputMode',oinputsValue);
+ //JSON.stringify()
+ //JSON.parse()
+}
+
+
 function startGame() {
     // reset game settings
     Snake.size = 3;
@@ -175,14 +185,8 @@ function startGame() {
     Food.present = false;
     
     // start game
-    inputsValue();
+   // inputsValue();
     createBoard();
     $(".overlay").hide();
     gameLoop();
-}
-
-function inputsValue(){
-  var oinputsIndex = document.getElementById("inputs").selectedIndex;
-  var oinputsValue = document.getElementById("inputs").options[oinputsIndex].value;
-  console.log(oinputsValue);
 }

@@ -254,3 +254,12 @@ code {
 .hug {
   margin-top: 0;
 }
+
+
+#infoPart{
+  float:right;
+}
+
+#gamePart{
+  float:left
+}
