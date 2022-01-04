@@ -8,8 +8,10 @@ var gameSpeed = 100;
 
 $(document).ready(function () {
     console.log("Ready Player One!");
+    localStorage.removeItem('inputMode');
     createBoard();
     $(".btn").click(function() {
+        inputsValue();
         startGame();
     });
 });
@@ -115,8 +117,20 @@ function keyPress() {
     });
 }
 
+
+function inputsValue(){
+  var oinputsIndex = document.getElementById("inputs").selectedIndex;
+  var oinputsValue = document.getElementById("inputs").options[oinputsIndex].value;
+ // console.log(oinputsValue);
+ 
+ JSON.stringify( localStorage.setItem('inputMode',oinputsValue));
+ //JSON.parse()
+}
+
+
 function gameLoop() {
     setTimeout(function() {
+        //inputsValue();
         keyPress();
         generateFood();
         moveSnake();
@@ -164,15 +178,6 @@ function gameOver() {
     blinkLoop();
 }
 
-function inputsValue(){
-  var oinputsIndex = document.getElementById("inputs").selectedIndex;
-  var oinputsValue = document.getElementById("inputs").options[oinputsIndex].value;
-  console.log(oinputsValue);
- // localStorage.setItem('inputMode',oinputsValue);
- //JSON.stringify()
- //JSON.parse()
-}
-
 
 function startGame() {
     // reset game settings
@@ -185,7 +190,7 @@ function startGame() {
     Food.present = false;
     
     // start game
-   // inputsValue();
+    //inputsValue();
     createBoard();
     $(".overlay").hide();
     gameLoop();
