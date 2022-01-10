@@ -2,7 +2,8 @@
 <html lang="en" >
 <head>
   <meta charset="UTF-8">
-  <title>CodePen - JavaScript Snake Game</title>
+  <meta name="viewport"content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=yes">
+  <title>JavaScript Snake Game</title>
   <link rel="stylesheet" href="./style.css">
 
 </head>
@@ -15,6 +16,15 @@
                 <header class="title">
                     <h3>JavaScript Snake Game</h3>
                     <h3 id="score">Score: </h3>
+                    <div id='facePart'>
+                        <video id="video" width="720" height="560" autoplay muted></video>
+                            <!--   <div id='emoti'>happy:
+                            <pre id='happy'>0</pre>sad:
+                            <pre id='sad'>0</pre>angry:
+                            <pre id='angry'>0</pre>surprised:
+                            <pre id='surprised'>0</pre>
+                        </div> -->
+                    </div>
                 </header>
             </div>
 
@@ -28,6 +38,7 @@
                 <select id="inputs"> 
                     <option value="joyconButtonStick">JoyCon Button & Stick</option>
                     <option value="joyconBewegung">JoyConbewegung</option>
+                    <option value="mimikKamera">Mimik Kontrolle</option>
                 </select>
             </div>
         </div>
@@ -51,6 +62,8 @@
 
   <script src="./script.js"></script>
   <script type="module" src="./joyCon.js"></script>
+  <script type="module" src= "./face-api.min.js"></script>
+  <script type="module" src="./face.js"></script> 
  
   
 </body>

@@ -94,14 +94,12 @@ function buttonStickData(joyCon,packet){
 }
 
 function armData(joyCon,packet){
-  
   //let accerometerCheck;
   let actualX = packet.actualAccelerometer["x"];
   let actualY = packet.actualAccelerometer["y"];
   // let actualZ = packet.actualAccelerometer["z"];
   key = 0;
   if(joyCon instanceof JoyConLeft){
-    
     //accerometerCheck = packet;
     if(numX > 10){  key = 38;} //up
     else if(numX < -10){  key = 40; }//down
@@ -147,7 +145,7 @@ function saveData(joyCon, packet){
    // accXLeft.push([actualX,performance.now()])
    //accXLeft.push({value:actualX,timeStamp:performance.now()})
   }else{
-    //console.log('right');
+    //console.log( packet.actualAccelerometer);
     let actualX = packet.actualAccelerometer["x"];
     let actualY = packet.actualAccelerometer["y"];
     if(accXRight.length >= 50){
@@ -180,27 +178,22 @@ setInterval(function (){
 },500)
 
 
-setInterval(function (){
+function handleJoyCon(event){
   let input = localStorage.getItem('inputMode');
-  console.log(input)
-  for (const joyCon of connectedJoyCons.values()) {
-    joyCon.addEventListener('hidinput', (event) => { 
-      switch(input){
-        case 'joyconBewegung':
-        //  joyCon.addEventListener('hidinput', (event) => {
-            armData(joyCon, event.detail);  
-          break;
+  console.log("localStorage",input)
+  
+  switch(input){
+    case 'joyconBewegung':
+        armData(joyCon, event.detail);
+        console.log("armData")
+        break;
 
-        case 'joyconButtonStick':
-        //  joyCon.addEventListener('hidinput', (event) => {
-            buttonStickData(joyCon, event.detail); 
-        //  }   
-          break;
-      } 
-    });
-  }
-},2000)
-
+    case 'joyconButtonStick':
+        buttonStickData(joyCon, event.detail);  
+        console.log("button")
+        break;
+  } 
+}
   
 setInterval(async () => {
    // inputsValue();
@@ -214,9 +207,9 @@ setInterval(async () => {
       await joyCon.enableStandardFullMode();
       await joyCon.enableIMUMode();
       await joyCon.enableVibration();
- 
-      // console.log(performance.now());
-     
+
+      joyCon.addEventListener('hidinput',handleJoyCon);
+      // console.log(performance.now());    
       joyCon.eventListenerAttached = true;
     }
     //console.log(Snake.alive)

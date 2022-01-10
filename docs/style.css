@@ -255,11 +255,25 @@ code {
   margin-top: 0;
 }
 
-
 #infoPart{
   float:right;
 }
 
 #gamePart{
   float:left
+}
+
+#facePart{
+  margin: 0;
+    padding: 0;
+    width: 50vw;
+    height: 50vh;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+}
+
+canvas{
+  /* position: absolute; */
+  float:right;
 }
