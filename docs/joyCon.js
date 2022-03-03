@@ -100,7 +100,7 @@ function armData(joyCon,packet){
   // let actualZ = packet.actualAccelerometer["z"];
   key = 0;
   if(joyCon instanceof JoyConLeft){
-    //accerometerCheck = packet;
+    //accelerometerCheck = packet;
     if(numX > 10){  key = 38;} //up
     else if(numX < -10){  key = 40; }//down
     if(numY > 10){  key = 37; } //left
@@ -178,22 +178,26 @@ setInterval(function (){
 },500)
 
 
-function handleJoyCon(event){
-  let input = localStorage.getItem('inputMode');
-  console.log("localStorage",input)
-  
-  switch(input){
-    case 'joyconBewegung':
-        armData(joyCon, event.detail);
-        console.log("armData")
-        break;
+function handleJoyCon(joyCon){
+  return function(event){
 
-    case 'joyconButtonStick':
-        buttonStickData(joyCon, event.detail);  
-        console.log("button")
-        break;
-  } 
+    let input = localStorage.getItem('inputMode');
+    console.log("localStorage",input)
+    
+    switch(input){
+      case 'joyconBewegung':
+          armData(joyCon, event.detail);
+          console.log("armData")
+          break;
+
+      case 'joyconButtonStick':
+          buttonStickData(joyCon, event.detail);  
+          console.log("button")
+          break;
+    } 
+  }
 }
+
   
 setInterval(async () => {
    // inputsValue();
@@ -208,8 +212,7 @@ setInterval(async () => {
       await joyCon.enableIMUMode();
       await joyCon.enableVibration();
 
-      joyCon.addEventListener('hidinput',handleJoyCon);
-      // console.log(performance.now());    
+      joyCon.addEventListener('hidinput',handleJoyCon(joyCon));
       joyCon.eventListenerAttached = true;
     }
     //console.log(Snake.alive)

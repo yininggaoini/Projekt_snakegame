@@ -1,13 +1,5 @@
 const video = document.getElementById('video')
 
-let numUp = 0;
-let numDown = 0;
-let numLeft = 0;
-let numRight = 0;
-let expressArr = [];
-
-let key;
-
 Promise.all([
   faceapi.nets.tinyFaceDetector.loadFromUri('/docs/models'),
   faceapi.nets.faceLandmark68Net.loadFromUri('/docs/models'),
@@ -25,15 +17,14 @@ function startVideo() {
 
 video.addEventListener('play', () => {
   const canvas = faceapi.createCanvasFromMedia(video)
-  document.body.append(canvas)
+  const container = document.getElementById('facePart')
+  container.append(canvas)
   const displaySize = { width: video.width, height: video.height }
   faceapi.matchDimensions(canvas, displaySize)
-/* 
-  let oHappy = document.getElementById('happy');
-  let oSad = document.getElementById('sad');
-  let oSurprised = document.getElementById('surprised');
-  let oAngry = document.getElementById('angry');
-   */
+
+  const oXAchse = document.getElementById('xAchse');
+  const oYAchse = document.getElementById('yAchse');
+
   setInterval(async () => {
     let input = localStorage.getItem('inputMode');
 
@@ -41,64 +32,55 @@ video.addEventListener('play', () => {
     const resizedDetections = faceapi.resizeResults(detections, displaySize)
     canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
     faceapi.draw.drawDetections(canvas, resizedDetections)
-   // faceapi.draw.drawFaceLandmarks(canvas, resizedDetections)
+    faceapi.draw.drawFaceLandmarks(canvas, resizedDetections)
     faceapi.draw.drawFaceExpressions(canvas, resizedDetections)
-  //  console.log(detections['0'].expressions.angry)
 
-    let happy = resizedDetections['0'].expressions['happy'];
-    let sad = resizedDetections['0'].expressions['sad'];
-    let angry = resizedDetections['0'].expressions['angry'];
-    let surprised = resizedDetections['0'].expressions['surprised'];
+   /*  let xAchse = detections[0].landmarks._shift._x;
+    let yAchse = detections[0].landmarks._shift._y; */
+    let mittelwertKameraHeight = (detections[0].detection._imageDims._height)/2;
+    let mittelwertKameraWidth = (detections[0].detection._imageDims._width)/2;
+    let xAchse = detections[0].landmarks._shift._x;
+    let yAchse = detections[0].landmarks._shift._y;
+ // console.log(mittelwertKameraHeight+'. '+mittelwertKameraWidth)
+//  console.log(detections);
+
+   /*  oXAchse.innerText = detections[0].detection._box._x;
+    oYAchse.innerText = detections[0].detection._box._y; */
+    
 
     if(input=='mimikKamera'){
-      //console.log(resizedDetections)
-      /* saveArrData(resizedDetections,'happy',numUp);
-      saveArrData(resizedDetections,'sad',numDown);
-      saveArrData(resizedDetections,'angry',numLeft);
-      saveArrData(resizedDetections,'surprised',numRight);  */
-
-      if(happy<=1.5 && happy>=0.6){ key = 38;}
-      else if(sad<=1.5 && sad>=0.6){  key = 40;}
-      if(angry<=1.5 && angry>=0.6){ key = 37;}
-      else if(surprised<=1.5 && surprised>=0.6){ key = 39;}
-      /* if(numUp>20){ key = 38;}
-      else if(numDown>20){  key = 40;}
-      if(numLeft>20){ key = 37;}
-      else if(numRight>20){ key = 39;}*/
-      defineDirc(key);
-      numUp=0;
-      numDown=0;
-      numLeft=0;
-      numRight=0; 
-
+      mimikControl(resizedDetections);
+    }
+    else if(input=='kopfBewegung'){
+      kopfControl(xAchse,yAchse,mittelwertKameraHeight,mittelwertKameraWidth,oXAchse,oYAchse);
     }
   }, 100)
+
 })
 
-function defineDirc(key){
-  switch(key){
-    case 37: // left arrow
-      if (Snake.direction != "r") {Snake.direction = "l";}
-      break;
-    case 38: // up arrow
-      if (Snake.direction != "d") {Snake.direction = "u";}
-      break;
-    case 39: // right arrow
-      if (Snake.direction != "l") {Snake.direction = "r";}
-      break;
-    case 40: // down arrow
-      if (Snake.direction != "u") {Snake.direction = "d";}
-      break;
-    }
+function kopfControl(xAchse,yAchse,mittelwertKameraHeight,mittelwertKameraWidth,oXAchse,oYAchse){
+  let positionX = (xAchse/mittelwertKameraWidth)*100;
+  let positionY = (yAchse/mittelwertKameraHeight)*100;
+  console.log('x:'+positionX+' . y:'+positionY);
+
+  if(positionX>=90){ if (Snake.direction != "r") {Snake.direction = "l";}}
+  else if(positionX<=65){if (Snake.direction != "l") {Snake.direction = "r";}}
+  if(positionY<=45){ if (Snake.direction != "d") {Snake.direction = "u";}}
+  else if(positionY>=70){ if (Snake.direction != "u") {Snake.direction = "d";}}
+
+  oXAchse.innerText = positionX;
+  oYAchse.innerText = positionY;
 }
 
-function saveArrData(detection,inputEmo,num){
-  let actualEmo = detection['0'].expressions[inputEmo];
-  if(expressArr.length>=50){  expressArr.shift();}
-  expressArr.push(actualEmo);
-  for(let x of expressArr){
-    if(actualEmo<=1&&actualEmo>=0.6){num++}
-  }
-  //console.log(expressArr)
-  //text.innerText = actualEmo;
+function mimikControl(resizedDetections){
+  let happy = resizedDetections['0'].expressions['happy'];
+  let sad = resizedDetections['0'].expressions['sad'];
+  let angry = resizedDetections['0'].expressions['angry'];
+  let surprised = resizedDetections['0'].expressions['surprised'];
+
+  if(happy<=1.5 && happy>=0.6){ if (Snake.direction != "d") {Snake.direction = "u";}}
+  else if(sad<=1.5 && sad>=0.6){ if (Snake.direction != "u") {Snake.direction = "d";}}
+  if(angry<=1.5 && angry>=0.6){  if (Snake.direction != "r") {Snake.direction = "l";}}
+  else if(surprised<=1.5 && surprised>=0.6){if (Snake.direction != "l") {Snake.direction = "r";}}
 }
+

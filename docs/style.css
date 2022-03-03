@@ -30,6 +30,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+  /* display: flex; */
 }
 ol, ul {
 	list-style: none;
@@ -59,7 +60,8 @@ html {
 
 .container {
     margin: 0 auto;
-    padding: 0 25px;
+    padding: 0 25px; 
+    padding: 0;
     text-align: center;
     position: relative;
 }
@@ -255,25 +257,58 @@ code {
   margin-top: 0;
 }
 
-#infoPart{
-  float:right;
+
+.wholeDiv{
+  display:flex;
+  
+}
+
+.infoPart{
+   /* float:right;  */
+  display: flex; 
+  flex:1;
+  flex-direction: column;
 }
 
 #gamePart{
-  float:left
+  /* float:left  */
+  /* display: flex; */
+  flex:1;
+  margin-right: 20px;
+  /* flex-shrink: 1; */
 }
 
 #facePart{
-  margin: 0;
-    padding: 0;
-    width: 50vw;
-    height: 50vh;
-    display: flex;
-    justify-content:center;
-    align-items: center;
+  margin: 10px;
+  padding: 0;
+  /*  width: 50vw;
+  height: 50vh; */
+  display:flex;
+ /*  justify-content:center;
+  align-items: center; */
+  position: relative;
+  flex-direction: row;
 }
 
-canvas{
-  /* position: absolute; */
+#facePart > video, #facePart > canvas{
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: 15px;
+}
+
+#facePart > canvas{
+  position: absolute; 
   float:right;
+} 
+
+#facePart > video{
+  flex: 1;
+}
+
+#joyInfo{
+  flex:1;
+  margin-left: 100px;
+  margin-top: 50px;
+  
 }

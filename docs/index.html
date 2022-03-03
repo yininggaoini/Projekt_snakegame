@@ -4,31 +4,23 @@
   <meta charset="UTF-8">
   <meta name="viewport"content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=yes">
   <title>JavaScript Snake Game</title>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css'>
   <link rel="stylesheet" href="./style.css">
 
 </head>
 <body>
 <!-- partial:index.partial.html -->
-    <div id="wholeDiv">
+    <div class="wholeDiv">
 
-        <div id="infoPart">
-            <div class="container">
+        <div class="infoPart">
+            <div class="container infoCon">
                 <header class="title">
                     <h3>JavaScript Snake Game</h3>
                     <h3 id="score">Score: </h3>
-                    <div id='facePart'>
-                        <video id="video" width="720" height="560" autoplay muted></video>
-                            <!--   <div id='emoti'>happy:
-                            <pre id='happy'>0</pre>sad:
-                            <pre id='sad'>0</pre>angry:
-                            <pre id='angry'>0</pre>surprised:
-                            <pre id='surprised'>0</pre>
-                        </div> -->
-                    </div>
-                </header>
+                </header>                
             </div>
 
-            <div class="container">
+            <div class="container infoCon">
                 <button id="connect">connect</button>
                 <!-- <h4>Left Controller</h4>
                 <pre id="left"></pre>
@@ -39,8 +31,29 @@
                     <option value="joyconButtonStick">JoyCon Button & Stick</option>
                     <option value="joyconBewegung">JoyConbewegung</option>
                     <option value="mimikKamera">Mimik Kontrolle</option>
+                    <option value="kopfBewegung">Kopfbewegung Kontrolle</option>
                 </select>
             </div>
+
+            <div id='facePart' class="container"> 
+                <video id="video" width="310" height="210" autoplay muted></video>
+                <div id='joyInfo'>
+                    <table>
+                        <thead>
+                            <tr><th></th></tr>
+                        </thead>
+                    </table>
+                </div>   
+            </div>
+
+            <div class="hinweis">Hinweis zur Mimiksteuerung:<br>
+                <i class="fa-solid fa-circle-arrow-up"></i><i class="fa-solid fa-face-laugh-beam"></i><br>
+                <i class="fa-solid fa-circle-arrow-down"></i><i class="fa-solid fa-face-frown"></i><br>
+                <i class="fa-solid fa-circle-arrow-left"></i><i class="fa-solid fa-face-angry"></i><br>
+                <i class="fa-solid fa-circle-arrow-right"></i><i class="fa-solid fa-face-surprise"></i>
+            </div>
+                
+           
         </div>
     
         

@@ -185,7 +185,7 @@ function startGame() {
     Snake.position = [[20,20],[20,19],[20,18]];
     Snake.direction = "r";
     Snake.alive = true;
-    gameSpeed = 100;
+    gameSpeed = 200;
     gamePoints = 0;
     Food.present = false;
     
