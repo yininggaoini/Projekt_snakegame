@@ -83,6 +83,11 @@ html {
 
 .title {
     margin-bottom: 0px;
+    padding-top: 5px;
+}
+
+.title > h3{
+  font-size: 25px;
 }
 
 #gameBoard, .row {
@@ -206,8 +211,8 @@ h4,
 h5,
 h6 {
   /* Change heading typefaces here */
-  font-family: sans-serif;
-  margin-top: 1.5rem;
+  font-family: Comic Sans MS;
+  margin-top: 1rem;
   margin-bottom: 0;
   line-height: 1.5rem;
 }
@@ -260,7 +265,7 @@ code {
 
 .wholeDiv{
   display:flex;
-  
+  background-color: #c4d6a7;
 }
 
 .infoPart{
@@ -294,7 +299,7 @@ code {
   position: absolute;
   top: 0;
   left: 0;
-  margin-top: 15px;
+  margin-top: 45px;
 }
 
 #facePart > canvas{
@@ -308,7 +313,22 @@ code {
 
 #joyInfo{
   flex:1;
-  margin-left: 100px;
+  margin-left: 270px;
   margin-top: 50px;
-  
+  font-family: Comic Sans MS;
+  text-align: center;
+  font-size: 20px;
+}
+
+.connectCSS{
+  margin-top: 15px;
+}
+
+#inputs{
+  font-family: Comic Sans MS;
+  /* background-color: #2E8B57  ; */
+}
+
+#connect{
+  font-family: Comic Sans MS;
 }
