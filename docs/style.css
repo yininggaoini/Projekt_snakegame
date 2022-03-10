@@ -311,7 +311,7 @@ code {
   flex: 1;
 }
 
-#joyInfo{
+.hinweis{
   flex:1;
   margin-left: 270px;
   margin-top: 50px;
@@ -326,9 +326,43 @@ code {
 
 #inputs{
   font-family: Comic Sans MS;
-  /* background-color: #2E8B57  ; */
+  background-color: #FFFFEE  ;
 }
 
 #connect{
   font-family: Comic Sans MS;
+}
+
+@media only screen and (max-width: 912px){
+  .wholeDiv{
+    display:flex;
+    background-color: #FFF;
+    flex-direction: column;
+    flex: 100%;
+    padding-right: 0px;
+    margin: auto;
+  }
+  #infoPart{
+    display:inline;
+    flex-direction: row;
+    margin-bottom: 30px;
+    width: 100%;
+  }
+  h3{
+    text-align: center;
+  }
+  .hinweis{
+    margin-bottom: auto;
+    width: 50vw;
+  }
+  #facePart > video, #facePart > canvas{
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-bottom: 45px;
+    margin-top: 0;
+  }
+  #gamePart{
+    margin-top: 60px;   
+  }
 }

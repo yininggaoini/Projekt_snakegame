@@ -83,4 +83,3 @@ function mimikControl(resizedDetections){
   if(angry<=1.5 && angry>=0.6){  if (Snake.direction != "r") {Snake.direction = "l";}}
   else if(surprised<=1.5 && surprised>=0.6){if (Snake.direction != "l") {Snake.direction = "r";}}
 }
-
