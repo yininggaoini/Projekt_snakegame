@@ -47,7 +47,6 @@ video.addEventListener('play', () => {
    /*  oXAchse.innerText = detections[0].detection._box._x;
     oYAchse.innerText = detections[0].detection._box._y; */
     
-
     if(input=='mimikKamera'){
       mimikControl(resizedDetections);
     }
