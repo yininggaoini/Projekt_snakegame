@@ -195,3 +195,38 @@ function startGame() {
     $(".overlay").hide();
     gameLoop();
 }
+
+
+document.getElementById("inputs").addEventListener('change',function(){
+
+  var oHinweise = document.getElementById("Hinweise");
+
+  var oinputsIndex = document.getElementById("inputs").selectedIndex;
+  var oinputsValue = document.getElementById("inputs").options[oinputsIndex].value;
+
+  const html = '<div class="hinweis" id="joyInfo">Hinweis zur Mimiksteuerung:\
+      <i class="fa-solid fa-circle-arrow-up"></i><i class="fa-solid fa-face-laugh-beam"></i><br>\
+      <i class="fa-solid fa-circle-arrow-down"></i><i class="fa-solid fa-face-frown"></i><br>\
+      <i class="fa-solid fa-circle-arrow-left"></i><i class="fa-solid fa-face-angry"></i><br>\
+      <i class="fa-solid fa-circle-arrow-right"></i><i class="fa-solid fa-face-surprise"></i>\
+    </div>';
+
+  const joyConHinweis = 'Bitte zuerst "JoyCon connect" Button klicken';
+  const kameraHinweis = 'Kamera wird eingeschalten, um Gesichtsdaten zu sammeln';
+
+  switch(oinputsValue){
+    case 'joyconButtonStick':
+      oHinweise.innerText= joyConHinweis;
+      break;
+    case 'joyconBewegung':
+      oHinweise.innerText= joyConHinweis;
+      break;
+    case 'mimikKamera':
+      oHinweise.innerText= kameraHinweis;
+      break;
+    case 'kopfBewegung':
+      oHinweise.innerText= kameraHinweis;
+      break;
+  }
+  
+})
