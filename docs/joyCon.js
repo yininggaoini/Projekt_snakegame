@@ -14,6 +14,7 @@ let key;
 function onLoad(){
     const button = document.getElementById('connect');
     button.addEventListener('click',connectJoyCon);
+    console.log(connectedJoyCons);
 }
 
 function defineDirc(key){
@@ -182,7 +183,7 @@ function handleJoyCon(joyCon){
   return function(event){
 
     let input = localStorage.getItem('inputMode');
-    console.log("localStorage",input)
+    // console.log("localStorage",input)
     
     switch(input){
       case 'joyconBewegung':

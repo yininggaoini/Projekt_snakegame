@@ -10,43 +10,103 @@
 </head>
 <body>
 <!-- partial:index.partial.html -->
-    <div class="wholeDiv">
+    <div class="wholeDiv" id="wholeDiv">
 
         <div class="infoPart">
-            <div class="container infoCon">
-                <header class="title">
-                    <h3>Accessible Snake Game</h3>
-                    <h3 id="score">Score: </h3>
-                </header>                
-            </div>
-
-            <div class="container infoCon connectCSS">
-                <button id="connect">joyCon connect</button>
-                <!-- <h4>Left Controller</h4>
-                <pre id="left"></pre>
-                <h4>Right Controller</h4>
-                <pre id="right"></pre> -->
-              <!--  <select id="inputs" onchange="inputsValue()">  -->
-                <select id="inputs"> 
-                    <option value="joyconButtonStick">JoyCon Button & Stick</option>
-                    <option value="joyconBewegung">JoyConbewegung</option>
-                    <option value="mimikKamera">Mimik Kontrolle</option>
-                    <option value="kopfBewegung">Kopfbewegung Kontrolle</option>
-                </select>
+            <div class="container" id="infoCon">
+                <div>
+                    <header class="title">
+                        <h3>Accessible Snake Game</h3>
+                        <h3 id="score">Score: </h3>
+                    </header> 
+                </div>   
+                <div id="actualEmotion" class="container">
+                    <div id="actualEmotDirc">
+                        <p id="emotion">aktl. Emo:</p>
+                        <p id="direction">aktl. Richtung:</p> 
+                    </div>
+                    <div id="actualIcons">
+                        <i id="laugh" class="fa-solid fa-face-laugh-beam"></i>
+                        <i id="sad" class="fa-solid fa-face-frown"></i>
+                        <i id="angry" class="fa-solid fa-face-angry"></i>
+                        <i id="surprise" class="fa-solid fa-face-surprise"></i>
+    
+                        <i id="up" class="fa-solid fa-circle-arrow-up"></i>
+                        <i id="down" class="fa-solid fa-circle-arrow-down"></i>
+                        <i id="left" class="fa-solid fa-circle-arrow-left"></i>
+                        <i id="right" class="fa-solid fa-circle-arrow-right"></i>
+                    </div>
+                </div>             
             </div>
 
             <div id='facePart' class="container"> 
                 <video id="video" width="310" height="210" autoplay muted></video>
                 <div class="hinweis" id="Hinweise">
-
+                    <p id="defaultInfo">Bitte "JoyCon connect" Button klicken, JoyCon zu verbinden</p>
+                    <p id="joyConHinweis">Bitte "JoyCon connect" Button klicken, JoyCon zu verbinden</p>
+                    <p id="joyConButtonHinweis">Das JoyCon hat einen Joystick und vier Tasten zur gleichzeitigen Steuerung des Spiels</p>
+                    <p id="joyConBewegungHinweis">Die Vorderseite des JoyCons ist dem Computer zugewandt, das Spiel wird durch Bewegen des JoyCons nach oben/unten sowie nach links/rechts gesteuert.</p>
+                    <p id="kameraHinweis">Kamera einschaltet, um Gesichtsdaten zu sammeln</p>
+                    <p id="kameraKopfHinweis">Steuerung des Spiels durch Erkennen der relativen Position des Kopfes nach oben, unten, links und rechts im Kamerabild</p>
+                    <div id='mimikInfo'>Hinweis zur Mimiksteuerung:<br>
+                        <i class="fa-solid fa-circle-arrow-up"></i><i class="fa-solid fa-face-laugh-beam"></i><br>
+                        <i class="fa-solid fa-circle-arrow-down"></i><i class="fa-solid fa-face-frown"></i><br>
+                        <i class="fa-solid fa-circle-arrow-left"></i><i class="fa-solid fa-face-angry"></i><br>
+                        <i class="fa-solid fa-circle-arrow-right"></i><i class="fa-solid fa-face-surprise"></i>
+                    </div>
                 </div>
-                <!-- <div class="hinweis" id='joyInfo'>Hinweis zur Mimiksteuerung:<br>
-                    <i class="fa-solid fa-circle-arrow-up"></i><i class="fa-solid fa-face-laugh-beam"></i><br>
-                    <i class="fa-solid fa-circle-arrow-down"></i><i class="fa-solid fa-face-frown"></i><br>
-                    <i class="fa-solid fa-circle-arrow-left"></i><i class="fa-solid fa-face-angry"></i><br>
-                    <i class="fa-solid fa-circle-arrow-right"></i><i class="fa-solid fa-face-surprise"></i>
-                </div>    -->  
-            </div>        
+            </div> 
+
+            
+            <div id="settings" class="container" >
+                <label>Settings</label>
+                <div class="container connectCSS farben">
+                    <label class="farben">Eingabemethode:</label>
+                    <select id="inputs"> 
+                        <option value="joyconButtonStick">JoyCon Button & Stick</option>
+                        <option value="joyconBewegung">JoyConbewegung</option>
+                        <option value="mimikKamera">Mimik Kontrolle</option>
+                        <option value="kopfBewegung">Kopfbewegung Kontrolle</option>
+                    </select>
+                    <button id="connect">joyCon connect</button>
+                </div>
+                
+                <div class="container" id="zweiteZeil">
+                    <div class=" farben">
+                        <label>Accessible Farben</label>
+                        <select name="farben" id="farbenSetting">
+                             <!-- <option style='display: none'></option> -->
+                             <option value="standard">Standardmodus</option>
+                            <option value="roteGruen">Rote/grüne Blindheit</option>
+                            <option value="blau">blaue Blindheit</option>
+                            <option value="total">totale Blindheit</option>
+                        </select>
+                    </div>
+     
+                    <div class="farben">
+                     <!-- <label>Geschwindigkeit</label> -->
+                     <label>Spiels Geschw.</label>
+                        <select name="geschwindigkeit" id="geschwindigkeit">
+                            <option value="standard">Standard: 1</option>
+                            <option value="langsamer">langsamer: 0.5</option>
+                            <option value="schneller">schneller: 1.5</option>
+                        </select>
+                    </div>
+     
+                    <div>
+                        <label class="farben">Musik</label>
+                        <!-- Musik herunterladen Adresse: https://mobcup.net/ringtone/snake-game-2yzcwjjz -->
+                        <button id="gameBtn">
+                            <i id="volume-high" class="fa-solid fa-volume-high"></i> 
+                            <i id = "volume-slash" class="fa-solid fa-volume-xmark"></i>
+                         </button>
+                        <audio autoplay="autoplay" controls="controls" loop="loop" preload="auto" hidden="true"
+                        src="./SnakeGame_ThemeSong.mp3" id="gameMusic"></audio>
+                    </div>
+                </div>
+                   
+            </div>
+                  
         </div>
     
         
@@ -67,10 +127,11 @@
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js'></script>
 
   <script src="./script.js"></script>
+  
   <script type="module" src="./joyCon.js"></script>
   <script type="module" src= "./face-api.min.js"></script>
   <script type="module" src="./face.js"></script> 
- 
+  <script type="module" src="./accessible.js"></script>
   
 </body>
 </html>

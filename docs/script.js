@@ -5,13 +5,15 @@ var gameBoardSize = 40;
 var gamePoints = 0;
 var gameSpeed = 100;
 
-
 $(document).ready(function () {
     console.log("Ready Player One!");
     localStorage.removeItem('inputMode');
     createBoard();
     $(".btn").click(function() {
         inputsValue();
+        farbeSettingsValue();
+        inputsSpeed();
+        spielFarben();
         startGame();
     });
 });
@@ -75,7 +77,24 @@ function moveSnake() {
       Snake.size++;
       Food.present = false;
       gamePoints += 5;
-      $(".row:nth-child(" + Food.position[0] + ") > .pixel:nth-child(" + Food.position[1] + ")").removeClass("foodPixel");
+      playCoinAudio();
+      let colorSetting = localStorage.getItem('farbeSetting');
+            
+      switch(colorSetting){
+        case 'standard':
+          $(".row:nth-child(" + Food.position[0] + ") > .pixel:nth-child(" + Food.position[1] + ")").removeClass("foodPixel");
+          break;
+        case 'roteGruen':
+          $(".row:nth-child(" + Food.position[0] + ") > .pixel:nth-child(" + Food.position[1] + ")").removeClass("foodPixelRed");
+          break;  
+        case 'blau':
+          $(".row:nth-child(" + Food.position[0] + ") > .pixel:nth-child(" + Food.position[1] + ")").removeClass("foodPixelBlue");
+          break;
+        case 'total':
+          $(".row:nth-child(" + Food.position[0] + ") > .pixel:nth-child(" + Food.position[1] + ")").removeClass("foodPixelTotal");
+          break;
+      }
+      // $(".row:nth-child(" + Food.position[0] + ") > .pixel:nth-child(" + Food.position[1] + ")").removeClass("foodPixel");
       $("#score").html("Score: "+gamePoints)
         if (gamePoints % 16 == 0 && gameSpeed > 10) { gameSpeed -= 5; };
     } else {
@@ -88,13 +107,48 @@ function moveSnake() {
   }
 }
 
+function playCoinAudio(){
+  const coinAud = new Audio("./coin.wav");
+  coinAud.play();
+}
+
+function playOverAudio(){
+  const overAud = new Audio("./game-over.mp3");
+  overAud.play();
+}
+
+function farbeSettingsValue(){
+  const oFarbensIndex = document.getElementById("farbenSetting").selectedIndex;
+  const oFarbensValue = document.getElementById("farbenSetting").options[oFarbensIndex].value;
+ // console.log(oinputsValue);
+ 
+ JSON.stringify( localStorage.setItem('farbeSetting',oFarbensValue));
+ //JSON.parse()
+}
 
 function generateFood() {
     if (Food.present === false) {
         Food.position = [Math.floor((Math.random()*40) + 1), Math.floor((Math.random()*40) + 1)]
         Food.present = true;
         console.log("Food at: "+Food.position);
-        $(".row:nth-child(" + Food.position[0] + ") > .pixel:nth-child(" + Food.position[1] + ")").addClass("foodPixel");
+        // $(".row:nth-child(" + Food.position[0] + ") > .pixel:nth-child(" + Food.position[1] + ")").addClass("foodPixel");
+
+        let colorSetting = localStorage.getItem('farbeSetting');
+        
+        switch(colorSetting){
+          case 'standard':
+            $(".row:nth-child(" + Food.position[0] + ") > .pixel:nth-child(" + Food.position[1] + ")").addClass("foodPixel");
+            break;
+          case 'roteGruen':
+            $(".row:nth-child(" + Food.position[0] + ") > .pixel:nth-child(" + Food.position[1] + ")").addClass("foodPixelRed");
+            break;     
+          case 'blau':
+            $(".row:nth-child(" + Food.position[0] + ") > .pixel:nth-child(" + Food.position[1] + ")").addClass("foodPixelBlue");
+            break;
+          case 'total':
+            $(".row:nth-child(" + Food.position[0] + ") > .pixel:nth-child(" + Food.position[1] + ")").addClass("foodPixelTotal");
+            break;
+        }         
     }
 }
 
@@ -122,11 +176,41 @@ function inputsValue(){
   var oinputsIndex = document.getElementById("inputs").selectedIndex;
   var oinputsValue = document.getElementById("inputs").options[oinputsIndex].value;
  // console.log(oinputsValue);
- 
  JSON.stringify( localStorage.setItem('inputMode',oinputsValue));
  //JSON.parse()
 }
 
+function inputsSpeed(){
+  var ospeedIndex = document.getElementById("geschwindigkeit").selectedIndex;
+  var ospeedValue = document.getElementById("geschwindigkeit").options[ospeedIndex].value;
+ JSON.stringify( localStorage.setItem('speedMode',ospeedValue));
+ //JSON.parse()
+}
+
+function spielFarben(){
+  let colorSetting = localStorage.getItem('farbeSetting');
+  const oGameBcgrd = document.getElementById('gameBoard');
+  const oInfoBcgrd = document.getElementById('wholeDiv');
+
+  switch(colorSetting){
+    case 'standard':
+      oGameBcgrd.style.backgroundColor = '#a8c899';
+      oInfoBcgrd.style.backgroundColor = '#c4d6a7';
+      break;
+    case 'roteGruen':
+      oGameBcgrd.style.backgroundColor = '#FAFAD2';
+      oInfoBcgrd.style.backgroundColor = '#EEE8AA';
+      break;  
+    case 'blau':
+      oGameBcgrd.style.backgroundColor = '#CCFFFF';
+      oInfoBcgrd.style.backgroundColor = '#BFEFFF';
+      break;
+    case 'total':
+      oGameBcgrd.style.backgroundColor = '#FFF';
+      oInfoBcgrd.style.backgroundColor = '#FFF';
+      break;
+  }
+}
 
 function gameLoop() {
     setTimeout(function() {
@@ -161,6 +245,7 @@ function alive(head) {
 function gameOver() {
     Snake.alive = false;
     console.log("Game Over!");
+    playOverAudio();
     $(".overlay").show();
     $("#gameOver").show();
     var blink = function() {
@@ -180,15 +265,27 @@ function gameOver() {
 
 
 function startGame() {
+    let speedSetting = localStorage.getItem('speedMode');
+    switch(speedSetting){
+      case 'standard':
+        gameSpeed = 200;
+        break;
+      case 'langsamer':
+        gameSpeed = 300;
+        break;
+      case 'schneller':
+        gameSpeed = 100;
+        break;
+    }
+
     // reset game settings
     Snake.size = 3;
     Snake.position = [[20,20],[20,19],[20,18]];
     Snake.direction = "r";
     Snake.alive = true;
-    gameSpeed = 200;
     gamePoints = 0;
     Food.present = false;
-    
+
     // start game
     //inputsValue();
     createBoard();
@@ -196,37 +293,3 @@ function startGame() {
     gameLoop();
 }
 
-
-document.getElementById("inputs").addEventListener('change',function(){
-
-  var oHinweise = document.getElementById("Hinweise");
-
-  var oinputsIndex = document.getElementById("inputs").selectedIndex;
-  var oinputsValue = document.getElementById("inputs").options[oinputsIndex].value;
-
-  const html = '<div class="hinweis" id="joyInfo">Hinweis zur Mimiksteuerung:\
-      <i class="fa-solid fa-circle-arrow-up"></i><i class="fa-solid fa-face-laugh-beam"></i><br>\
-      <i class="fa-solid fa-circle-arrow-down"></i><i class="fa-solid fa-face-frown"></i><br>\
-      <i class="fa-solid fa-circle-arrow-left"></i><i class="fa-solid fa-face-angry"></i><br>\
-      <i class="fa-solid fa-circle-arrow-right"></i><i class="fa-solid fa-face-surprise"></i>\
-    </div>';
-
-  const joyConHinweis = 'Bitte zuerst "JoyCon connect" Button klicken';
-  const kameraHinweis = 'Kamera wird eingeschalten, um Gesichtsdaten zu sammeln';
-
-  switch(oinputsValue){
-    case 'joyconButtonStick':
-      oHinweise.innerText= joyConHinweis;
-      break;
-    case 'joyconBewegung':
-      oHinweise.innerText= joyConHinweis;
-      break;
-    case 'mimikKamera':
-      oHinweise.innerText= kameraHinweis;
-      break;
-    case 'kopfBewegung':
-      oHinweise.innerText= kameraHinweis;
-      break;
-  }
-  
-})
